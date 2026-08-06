@@ -320,9 +320,54 @@
     opacity:.8; user-select:none;
   }
   #lightbox .close:hover{ opacity:1; }
+
+  .contact-bar{
+    position:fixed;
+    top:14px; right:14px;
+    display:flex;
+    gap:10px;
+    z-index:1200;
+  }
+  .contact-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:46px; height:46px;
+    border-radius:50%;
+    color:#fff;
+    text-decoration:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.28);
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .contact-btn svg{ width:22px; height:22px; fill:#fff; }
+  .contact-btn:hover{ transform:translateY(-2px); filter:brightness(1.12); }
+  .c-tg{ background:#229ED9; }
+  .c-mail{ background:#D93025; }
+
+  #visits{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 14px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:var(--card);
+    font-size:12.5px;
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  #visits.ready{ opacity:1; }
 </style>
 </head>
 <body>
+
+<div class="contact-bar">
+  <a class="contact-btn c-tg" href="https://t.me/Jonayogoth" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
+    <svg viewBox="0 0 24 24"><path d="M9.04 15.71l-.47 4.44c.66 0 .95-.29 1.29-.63l3.06-2.94 6.32 4.66c1.16.64 2 .3 2.31-1.08L23.96 4.5c.43-1.92-.62-2.66-1.9-2.16L1.9 9.94c-1.37.52-1.3 1.61-.2 2 .55.2.94.67 1 .67l1.7.53 8.55-6.03c.43-.33.84-.02.51.19l-4.4 4.1z"/></svg>
+  </a>
+  <a class="contact-btn c-mail" href="mailto:jonayooficial@gmail.com?subject=Contacto%20v%C3%ADa%20web" aria-label="Correo" title="Escribir por correo">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM4 6h16l-8 5.5L4 6zm0 12V8.9l8 5.4 8-5.4V18z"/></svg>
+  </a>
+</div>
 
 <header class="hero">
   <img class="logo-main clickable" src="jonayo-logo.png" alt="Jonayo" data-large="jonayo-logo-large.png">
@@ -332,7 +377,7 @@
   <div id="feed"></div>
 </main>
 
-<footer>jonayo · actualizado a mano, sin servidores</footer>
+<footer>jonayo · actualizado a mano, sin servidores<br><span id="visits">Visitas: …</span></footer>
 
 <div id="lightbox" aria-hidden="true">
   <span class="close" aria-label="Cerrar">&times;</span>
@@ -555,6 +600,18 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') lightbox.classList.remove('open');
 });
+
+/* Contador de visitas (CountAPI, gratis, sin backend) */
+(function(){
+  var v = document.getElementById('visits');
+  if (!v) return;
+  var url = 'https://api.countapi.xyz/hit/jonayo.vercel.app/visits';
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(d){ v.textContent = 'Visitas: ' + d.value; })
+    .catch(function(){ v.textContent = 'Visitas: —'; })
+    .finally(function(){ v.classList.add('ready'); });
+})();
 </script>
 
 </body>
