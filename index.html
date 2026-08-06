@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jonayo â€” SmartCache</title>
+<title>Jonayo �?" SmartCache</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -229,6 +229,52 @@
   }
   .download-btn:hover{ background:#e34a10; transform:translateY(-1px); }
 
+  .title-badge{
+    display:inline-block;
+    vertical-align:middle;
+    margin-left:10px;
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:12.5px;
+    color:#fff;
+    background:linear-gradient(90deg,#e34a10,#FF8A2E,#e34a10);
+    background-size:200% 100%;
+    padding:3px 11px;
+    border-radius:20px;
+    animation:bgShift 2.5s linear infinite, glowPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes bgShift{ to{ background-position:200% 0; } }
+  @keyframes glowPulse{
+    0%,100%{ box-shadow:0 0 8px rgba(255,90,31,.6); filter:brightness(1); }
+    50%{ box-shadow:0 0 18px 3px rgba(255,140,30,.95), 0 0 34px rgba(255,200,60,.65); filter:brightness(1.25); }
+  }
+
+  .license{ margin-top:8px; }
+  .license p{ margin-top:6px; }
+  .cta-row{
+    margin-top:14px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .cta-btn{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:13px;
+    padding:11px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#fff;
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .cta-btn:hover{ transform:translateY(-1px); filter:brightness(1.12); }
+  .cta-mail{ background:var(--blue); box-shadow:0 4px 14px rgba(36,81,255,0.3); }
+  .cta-tg{ background:#229ED9; box-shadow:0 4px 14px rgba(34,158,217,0.3); }
+
   footer{
     text-align:center;
     padding:30px 20px 50px;
@@ -286,7 +332,7 @@
   <div id="feed"></div>
 </main>
 
-<footer>jonayo â€” actualizado a mano, sin servidores</footer>
+<footer>jonayo �?" actualizado a mano, sin servidores</footer>
 
 <div id="lightbox" aria-hidden="true">
   <span class="close" aria-label="Cerrar">&times;</span>
@@ -295,30 +341,30 @@
 
 <script>
 /* ============================================================
-   CÃ“MO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
+   C�"MO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
    ------------------------------------------------------------
    Las publicaciones viven en la lista POSTS de abajo (cada una
    es un objeto { ... }). El sitio las muestra solas, ordenadas
-   por "date" (la mÃ¡s nueva arriba).
+   por "date" (la más nueva arriba).
 
-   Campos de cada publicaciÃ³n:
-     id          -> texto Ãºnico que no se repita
+   Campos de cada publicación:
+     id          -> texto único que no se repita
      version     -> etiqueta corta (p. ej. "v1.2")
-     date        -> "AAAA-MM-DD" (la fecha de la publicaciÃ³n)
-     updated     -> true si es una actualizaciÃ³n de algo ya publicado
-     title       -> tÃ­tulo
+     date        -> "AAAA-MM-DD" (la fecha de la publicación)
+     updated     -> true si es una actualización de algo ya publicado
+     title       -> título
      image       -> (opcional) nombre del archivo PNG en esta misma carpeta
-     description -> texto o lista de pÃ¡rrafos
-     why         -> (opcional) bloque "por quÃ© tenerlo"
-     downloadUrl -> enlace del botÃ³n de descarga
-     downloadLabel-> texto del botÃ³n
+     description -> texto o lista de párrafos
+     why         -> (opcional) bloque "por qué tenerlo"
+     downloadUrl -> enlace del botón de descarga
+     downloadLabel-> texto del botón
 
    Para PUBLICAR ALGO NUEVO / MARCAR COMO ACTUALIZADO:
      agregar un bloque o cambiar su date (y updated: true).
-     GuardÃ¡ y hacÃ© commit: Vercel lo publica solo.
+     Guardá y hacé commit: Vercel lo publica solo.
 
-   Para posts destacados de un programa podÃ©s usar ademÃ¡s:
-     intro    -> pÃ¡rrafo de presentaciÃ³n (bajo el tÃ­tulo "Â¿QuÃ© es SMARTCACHE?")
+   Para posts destacados de un programa podés usar además:
+     intro    -> párrafo de presentación (bajo el título "¿Qué es SMARTCACHE?")
      features -> lista [{ title, text }] de 3 cajas de beneficios
      blocks   -> lista [{ heading, text }] de secciones extra
    ============================================================ */
@@ -328,20 +374,29 @@ const POSTS = [
     version: "v1.2",
     date: "2026-08-06",
     updated: false,
-    title: "SmartCachÃ©",
+    title: "SmartCaché",
     image: "smartcache-logo.png", imageLarge: "smartcache-logo-large.png",
-    intro: "Â¿HDD lento y el juego tarda en cargar? SmartCachÃ© usa una parte de tu SSD como cachÃ© para acelerar tu disco duro: mÃ¡s velocidad, mÃ¡s FPS y sin comprar nada nuevo.",
+    titleBadge: "3 días de prueba gratis",
+    intro: "¿HDD lento y el juego tarda en cargar? SmartCaché usa una parte de tu SSD como caché para acelerar tu disco duro: más velocidad, más FPS y sin comprar nada nuevo.",
     features: [
-      { title: "Rendimiento al mÃ¡ximo", text: "Tu HDD vuela usando la velocidad de tu SSD como cachÃ©." },
-      { title: "Menos carga, mÃ¡s FPS", text: "Cargas mÃ¡s rÃ¡pido y el juego se siente mÃ¡s fluido." },
-      { title: "Un solo clic", text: "Simple de activar. Sin conocimientos tÃ©cnicos." }
+      { title: "Rendimiento al máximo", text: "Tu HDD vuela usando la velocidad de tu SSD como caché." },
+      { title: "Menos carga, más FPS", text: "Cargas más rápido y el juego se siente más fluido." },
+      { title: "Un solo clic", text: "Simple de activar. Sin conocimientos técnicos." }
     ],
     blocks: [
-      { heading: "Dale una segunda vida a tu HDD", text: "No hace falta cambiar de disco: convertÃ­ tu HDD actual en el rendimiento que tu HDD nunca tuvo." },
-      { heading: "Â¿A quiÃ©n le sirve?", text: "A gamers que quieren mÃ¡s FPS y a cualquiera que quiera una PC mÃ¡s rÃ¡pida, sin gastar de mÃ¡s." }
+      { heading: "Dale una segunda vida a tu HDD", text: "No hace falta cambiar de disco: convertí tu HDD actual en el rendimiento que tu HDD nunca tuvo." },
+      { heading: "¿A quién le sirve?", text: "A gamers que quieren más FPS y a cualquiera que quiera una PC más rápida, sin gastar de más." }
     ],
     downloadUrl: "https://github.com/Jonayo/smartcache-updates/releases/latest/download/SmartCache.exe",
-    downloadLabel: "Descargar la Ãºltima versiÃ³n"
+    downloadLabel: "Descargar la última versión",
+    license: {
+      heading: "ADQUIRIR UNA LICENCIA",
+      text: "¿Te gustó la prueba? Conseguí tu licencia por correo o escribí por Telegram.",
+      buttons: [
+        { label: "✉ Escribir por correo", cls: "cta-mail", href: "mailto:jonayooficial@gmail.com?subject=Licencia%20SmartCach%C3%A9" },
+        { label: "Telegram", cls: "cta-tg", href: "https://t.me/Jonayogoth" }
+      ]
+    }
   },
   {
     id: "clancells",
@@ -350,17 +405,18 @@ const POSTS = [
     updated: false,
     title: "ClanCells Simple Tools",
     image: "simple-tools-logo.png", imageLarge: "simple-tools-large.png",
-    introLabel: "Â¿QuÃ© es CLANCELLS?",
-    intro: "Una utilidad gratis para Windows hecha para tÃ©cnicos de celulares: repara, desbloquea y gestiona dispositivos Android (Xiaomi, Samsung, Moto, Poco y mÃ¡s) con un solo programa, sin depender de otras herramientas.",
+    titleBadge: "GRATIS",
+    introLabel: "¿Qué es CLANCELLS?",
+    intro: "Una utilidad gratis para Windows hecha para técnicos de celulares: repara, desbloquea y gestiona dispositivos Android (Xiaomi, Samsung, Moto, Poco y más) con un solo programa, sin depender de otras herramientas.",
     features: [
-      { title: "Todo en uno", text: "Comandos ADB/Fastboot, bypass de cuentas, desbloqueos y diagnÃ³stico en una sola interfaz sencilla." },
-      { title: "Desbloqueo y FRP", text: "Elimina bloqueos FRP, gestiona Knox/KG Locked y desbloquea Xiaomi, Redmi y Poco con el mÃ©todo 'Jonayo'." },
-      { title: "DiagnÃ³stico y reparaciÃ³n", text: "Modo Diag en Qualcomm, arreglo de bootloop, validaciÃ³n de IMEI y cambio de regiÃ³n en pocos clics." }
+      { title: "Todo en uno", text: "Comandos ADB/Fastboot, bypass de cuentas, desbloqueos y diagnóstico en una sola interfaz sencilla." },
+      { title: "Desbloqueo y FRP", text: "Elimina bloqueos FRP, gestiona Knox/KG Locked y desbloquea Xiaomi, Redmi y Poco con el método 'Jonayo'." },
+      { title: "Diagnóstico y reparación", text: "Modo Diag en Qualcomm, arreglo de bootloop, validación de IMEI y cambio de región en pocos clics." }
     ],
     blocks: [
-      { heading: "Gratis, en Windows", text: "Sin licencia ni conexiÃ³n constante. Funciona solo en Windows, se instala como cualquier programa. Antivirus desactivado durante la extracciÃ³n: son falsos positivos tÃ­picos en este tipo de herramientas." },
-      { heading: "Requisitos", text: "Controladores ADB/Fastboot y Visual C++ Redistributable: se instalan desde la pestaÃ±a 'Utilidades' de la herramienta." },
-      { heading: "Â¿Para quiÃ©n?", text: "Para tÃ©cnicos de celulares y usuarios que reparan Android: una sola herramienta hace el trabajo de varias, sin costo." }
+      { heading: "Gratis, en Windows", text: "Sin licencia ni conexión constante. Funciona solo en Windows, se instala como cualquier programa. Antivirus desactivado durante la extracción: son falsos positivos típicos en este tipo de herramientas." },
+      { heading: "Requisitos", text: "Controladores ADB/Fastboot y Visual C++ Redistributable: se instalan desde la pestaña 'Utilidades' de la herramienta." },
+      { heading: "¿Para quién?", text: "Para técnicos de celulares y usuarios que reparan Android: una sola herramienta hace el trabajo de varias, sin costo." }
     ],
     downloadUrl: "https://www.mediafire.com/file/a0sf3ltc8tjpdg4/ClanCells_Simple_Tools_v6.3.rar/file",
     downloadLabel: "Descargar gratis"
@@ -372,15 +428,16 @@ const POSTS = [
     updated: false,
     title: "ClanCells HEX Editor",
     image: "clancells-hex-logo.png", imageLarge: "clancells-hex-large.png",
-    introLabel: "Â¿QuÃ© es CLANCELLS HEX?",
-    intro: "Un editor hexadecimal gratis para Windows, creado por Jonayo, para tÃ©cnicos que trabajan con ficheros de firmware: soporta formatos .bin, .rom, .cap y mÃ¡s, sin pagar licencias.",
+    titleBadge: "GRATIS",
+    introLabel: "¿Qué es CLANCELLS HEX?",
+    intro: "Un editor hexadecimal gratis para Windows, creado por Jonayo, para técnicos que trabajan con ficheros de firmware: soporta formatos .bin, .rom, .cap y más, sin pagar licencias.",
     features: [
-      { title: "Gratis y en espaÃ±ol", text: "Editor de cÃ³digo hexadecimal libre, hecho para usar en cualquier PC con Windows." },
-      { title: "Formatos de firmware", text: "AbrÃ­ y editÃ¡ archivos .bin, .rom y .cap de forma directa." },
-      { title: "Beta, en crecimiento", text: "VersiÃ³n beta, sigue sumando funciones con la ayuda de la comunidad." }
+      { title: "Gratis y en español", text: "Editor de código hexadecimal libre, hecho para usar en cualquier PC con Windows." },
+      { title: "Formatos de firmware", text: "Abrí y editá archivos .bin, .rom y .cap de forma directa." },
+      { title: "Beta, en crecimiento", text: "Versión beta, sigue sumando funciones con la ayuda de la comunidad." }
     ],
     blocks: [
-      { heading: "Â¿Para quiÃ©n?", text: "Para tÃ©cnicos y curiosos que necesitan ver y modificar archivos de firmware de celulares sin costar un peso." }
+      { heading: "¿Para quién?", text: "Para técnicos y curiosos que necesitan ver y modificar archivos de firmware de celulares sin costar un peso." }
     ],
     downloadUrl: "https://www.mediafire.com/file/rhdi30x1vliojtq/ClanCells_Hex_Editor.rar/file",
     downloadLabel: "Descargar gratis"
@@ -392,7 +449,7 @@ function renderFeed(){
   feed.innerHTML = "";
 
   if (POSTS.length === 0){
-    feed.innerHTML = '<div class="empty">TodavÃ­a no hay publicaciones.</div>';
+    feed.innerHTML = '<div class="empty">Todavía no hay publicaciones.</div>';
     return;
   }
 
@@ -405,7 +462,7 @@ function renderFeed(){
 
     let badge = "";
     if (i === 0){
-      badge = '<span class="latest-badge"><span class="ping"></span>Ãºltimo</span>';
+      badge = '<span class="latest-badge"><span class="ping"></span>último</span>';
     } else if (post.updated){
       badge = '<span class="latest-badge" style="background:var(--blue);color:#fff;">actualizado</span>';
     }
@@ -415,7 +472,7 @@ function renderFeed(){
       : '<div class="post-top"></div>';
 
     const intro = post.intro
-      ? '<div class="blk"><span class="blk-title">' + escapeHtml(post.introLabel || 'Â¿QuÃ© es SMARTCACHE?') + '</span><p>' + escapeHtml(post.intro) + '</p></div>'
+      ? '<div class="blk"><span class="blk-title">' + escapeHtml(post.introLabel || '¿Qué es SMARTCACHE?') + '</span><p>' + escapeHtml(post.intro) + '</p></div>'
       : '';
 
     const features = (post.features || [])
@@ -426,17 +483,30 @@ function renderFeed(){
       .map(b => '<div class="blk"><span class="blk-title">' + escapeHtml(b.heading) + '</span><p>' + escapeHtml(b.text) + '</p></div>')
       .join('');
 
+    const titleBadge = post.titleBadge
+      ? '<span class="title-badge">' + escapeHtml(post.titleBadge) + '</span>'
+      : '';
+
+    const license = post.license
+      ? '<div class="license"><span class="blk-title">' + escapeHtml(post.license.heading) + '</span>' +
+        (post.license.text ? '<p>' + escapeHtml(post.license.text) + '</p>' : '') +
+        '<div class="cta-row">' +
+        post.license.buttons.map(b => '<a class="cta-btn ' + (b.cls || '') + '" href="' + escapeHtml(b.href) + '"' + (b.href.indexOf('mailto:') === 0 ? '' : ' target="_blank" rel="noopener"') + '>' + escapeHtml(b.label) + '</a>').join('') +
+        '</div></div>'
+      : '';
+
     const body = post.intro || post.features || post.blocks
       ? '<div class="post-body">' +
           '<div class="post-meta">' +
             '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
           '</div>' +
-          '<div class="post-title">' + escapeHtml(post.title) + '</div>' +
+          '<div class="post-title">' + escapeHtml(post.title) + titleBadge + '</div>' +
           intro +
           (features ? '<div class="features">' + features + '</div>' : '') +
           blocks +
+          license +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' â†“</a>' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' �?"</a>' +
           '</div>' +
         '</div>'
       : '<div class="post-body">' +
@@ -447,7 +517,7 @@ function renderFeed(){
           '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
           (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' â†“</a>' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' �?"</a>' +
           '</div>' +
         '</div>';
 
