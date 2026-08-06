@@ -393,7 +393,7 @@ const POSTS = [
       heading: "ADQUIRIR UNA LICENCIA",
       text: "¿Te gustó la prueba? Conseguí tu licencia por correo o escribí por Telegram.",
       buttons: [
-        { label: "✉ Escribir por correo", cls: "cta-mail", href: "mailto:jonayooficial@gmail.com?subject=Licencia%20SmartCach%C3%A9" },
+        { label: "Escribir por correo", cls: "cta-mail", href: "mailto:jonayooficial@gmail.com?subject=Licencia%20SmartCach%C3%A9" },
         { label: "Telegram", cls: "cta-tg", href: "https://t.me/Jonayogoth" }
       ]
     }
@@ -506,7 +506,7 @@ function renderFeed(){
           blocks +
           license +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' �?"</a>' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel)</a>' +
           '</div>' +
         '</div>'
       : '<div class="post-body">' +
@@ -517,7 +517,7 @@ function renderFeed(){
           '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
           (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' �?"</a>' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel)</a>' +
           '</div>' +
         '</div>';
 
