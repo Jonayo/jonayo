@@ -249,12 +249,37 @@
     .cursor, .ping{ animation:none; }
   }
   :focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+  img.clickable{ cursor:zoom-in; transition:transform .15s ease; }
+  img.clickable:hover{ transform:scale(1.02); }
+
+  #lightbox{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:1000;
+    padding:20px;
+  }
+  #lightbox.open{ display:flex; }
+  #lightbox img{
+    max-width:92vw; max-height:90vh;
+    border-radius:10px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  }
+  #lightbox .close{
+    position:absolute; top:16px; right:22px;
+    color:#fff; font-size:34px; line-height:1;
+    cursor:pointer; font-family:'Space Mono', monospace;
+    opacity:.8; user-select:none;
+  }
+  #lightbox .close:hover{ opacity:1; }
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <img class="logo-main" src="jonayo-logo.png" alt="Jonayo">
+  <img class="logo-main clickable" src="jonayo-logo.png" alt="Jonayo">
 </header>
 
 <main>
@@ -262,6 +287,11 @@
 </main>
 
 <footer>jonayo — actualizado a mano, sin servidores</footer>
+
+<div id="lightbox" aria-hidden="true">
+  <span class="close" aria-label="Cerrar">&times;</span>
+  <img src="" alt="">
+</div>
 
 <script>
 /* ============================================================
@@ -381,7 +411,7 @@ function renderFeed(){
     }
 
     const image = post.image
-      ? '<div class="post-top"><img class="post-logo" alt="' + escapeHtml(post.title) + '" src="' + escapeHtml(post.image) + '"></div>'
+      ? '<div class="post-top"><img class="post-logo clickable" alt="' + escapeHtml(post.title) + '" src="' + escapeHtml(post.image) + '"></div>'
       : '<div class="post-top"></div>';
 
     const intro = post.intro
@@ -439,6 +469,22 @@ function escapeHtml(str){
 }
 
 renderFeed();
+
+/* Lightbox: abrir imagen en grande al hacer clic */
+const lightbox = document.getElementById('lightbox');
+const lbImg = lightbox ? lightbox.querySelector('img') : null;
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList && e.target.classList.contains('clickable')){
+    if (lbImg) lbImg.src = e.target.src;
+    lightbox.classList.add('open');
+  } else if (e.target.closest && e.target.closest('#lightbox')){
+    lightbox.classList.remove('open');
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') lightbox.classList.remove('open');
+});
 </script>
 
 </body>
