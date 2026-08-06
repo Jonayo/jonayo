@@ -167,8 +167,43 @@
   }
   .why-block p{ margin-top:2px; }
 
-  .post-footer{
+  .blk{ margin-top:20px; }
+  .blk-title{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:.01em;
+    color:var(--ink);
+    border-bottom:2px solid var(--accent);
+    padding-bottom:4px;
+    display:inline-block;
+    margin-bottom:8px;
+  }
+  .blk p{ margin-top:4px; color:#3a3a37; font-size:14.5px; }
+
+  .features{
     margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .feat{
+    background:#F4EFE1;
+    border-left:3px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    padding:12px 16px;
+  }
+  .feat h4{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink);
+    margin-bottom:3px;
+  }
+  .feat p{ font-size:14px; color:#3a3a37; }
+
+  .post-footer{
+    margin-top:22px;
     padding:0 24px;
     display:flex;
     align-items:center;
@@ -251,7 +286,12 @@
 
    Para PUBLICAR ALGO NUEVO / MARCAR COMO ACTUALIZADO:
      agregar un bloque o cambiar su date (y updated: true).
-     Guardá y hacé commit: el sitio se publica solo.
+     Guardá y hacé commit: Vercel lo publica solo.
+
+   Para posts destacados de un programa podés usar además:
+     intro    -> párrafo de presentación (bajo el título "¿Qué es SMARTCACHE?")
+     features -> lista [{ title, text }] de 3 cajas de beneficios
+     blocks   -> lista [{ heading, text }] de secciones extra
    ============================================================ */
 const POSTS = [
   {
@@ -261,11 +301,16 @@ const POSTS = [
     updated: false,
     title: "SmartCaché",
     image: "smartcache-logo.png",
-    description: [
-      "Alguna vez quisiste JUGAR con tu HDD a velocidades de tu SSD? Ahora es posible!!",
-      "SmartCaché es un programa para crear caché utilizando una pequeña parte de tu disco sólido (SSD, NVME, M.2, etc) como almacenamiento de procesado para tu HDD (Disco duro), brindándote velocidades y rendimientos super altos! TODO CON UN SIMPLE CLICK!"
+    intro: "SMARTCACHE es un programa innovador diseñado para crear caché utilizando una pequeña parte de tu disco sólido (SSD, NVME, M.2, etc.) como almacenamiento de procesado para tu disco duro (HDD). Esto te brinda velocidades y rendimientos superaltos para tus juegos y aplicaciones.",
+    features: [
+      { title: "Rendimiento optimizado", text: "Convierte tu HDD en una unidad de alto rendimiento utilizando la velocidad de tu SSD para la caché. Ideal para gamers y usuarios que buscan eficiencia." },
+      { title: "Velocidad y fluidez", text: "Experimenta tiempos de carga reducidos y un juego más fluido, mejorando los FPS sin invertir en nuevos discos." },
+      { title: "Fácil de usar", text: "¡TODO CON UN SIMPLE CLICK! Activa la caché de tu SSD para tu HDD de forma instantánea y sin complicaciones técnicas." }
     ],
-    why: "En resumen: menos esperas, discos que duran más y una PC que se siente nueva, sin que tengas que saber nada del sistema.",
+    blocks: [
+      { heading: "Dale una segunda vida a tu HDD", text: "SMARTCACHE resuelve un problema importante: permite a los usuarios no gastar tanto dinero en SSD y darle una segunda vida a sus HDDs para poder jugar. Disfruta de un rendimiento excepcional sin grandes inversiones." },
+      { heading: "¿Quién se beneficia de SMARTCACHE?", text: "SMARTCACHE es ideal para jugadores que quieren mejorar su experiencia con juegos instalados en HDDs, personas con presupuestos ajustados que buscan maximizar el rendimiento sin comprar nuevos SSDs, y cualquier usuario que desee acelerar sus tareas diarias en discos duros." }
+    ],
     downloadUrl: "https://github.com/Jonayo/smartcache-updates/releases/latest/download/SmartCache.exe",
     downloadLabel: "Descargar la última versión"
   }
@@ -298,26 +343,44 @@ function renderFeed(){
       ? '<div class="post-top"><img class="post-logo" alt="' + escapeHtml(post.title) + '" src="' + escapeHtml(post.image) + '"></div>'
       : '<div class="post-top"></div>';
 
-    const desc = (post.description || [])
-      .map(t => '<p>' + escapeHtml(t) + '</p>').join('');
-
-    const why = post.why
-      ? '<div class="why-block"><span class="why-label">¿Por qué tenerlo?</span><p>' + escapeHtml(post.why) + '</p></div>'
+    const intro = post.intro
+      ? '<div class="blk"><span class="blk-title">¿Qué es SMARTCACHE?</span><p>' + escapeHtml(post.intro) + '</p></div>'
       : '';
 
-    el.innerHTML =
-      image +
-      '<div class="post-body">' +
-        '<div class="post-meta">' +
-          '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
-        '</div>' +
-        '<div class="post-title">' + escapeHtml(post.title) + '</div>' +
-        '<div class="post-desc">' + desc + '</div>' +
-        why +
-        '<div class="post-footer">' +
-          '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' ↓</a>' +
-        '</div>' +
-      '</div>';
+    const features = (post.features || [])
+      .map(f => '<div class="feat"><h4>' + escapeHtml(f.title) + '</h4><p>' + escapeHtml(f.text) + '</p></div>')
+      .join('');
+
+    const blocks = (post.blocks || [])
+      .map(b => '<div class="blk"><span class="blk-title">' + escapeHtml(b.heading) + '</span><p>' + escapeHtml(b.text) + '</p></div>')
+      .join('');
+
+    const body = post.intro || post.features || post.blocks
+      ? '<div class="post-body">' +
+          '<div class="post-meta">' +
+            '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
+          '</div>' +
+          '<div class="post-title">' + escapeHtml(post.title) + '</div>' +
+          intro +
+          (features ? '<div class="features">' + features + '</div>' : '') +
+          blocks +
+          '<div class="post-footer">' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' ↓</a>' +
+          '</div>' +
+        '</div>'
+      : '<div class="post-body">' +
+          '<div class="post-meta">' +
+            '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
+          '</div>' +
+          '<div class="post-title">' + escapeHtml(post.title) + '</div>' +
+          '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
+          (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
+          '<div class="post-footer">' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + ' ↓</a>' +
+          '</div>' +
+        '</div>';
+
+    el.innerHTML = image + body;
 
     feed.appendChild(el);
   });
