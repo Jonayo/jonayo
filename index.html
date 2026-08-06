@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -208,25 +208,25 @@
   <div id="feed"></div>
 </main>
 
-<footer>jonayo â€” actualizado a mano, sin servidores</footer>
+<footer>jonayo — actualizado a mano, sin servidores</footer>
 
 <script>
 /* ============================================================
-   CÃ“MO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
+   CÓMO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
    ------------------------------------------------------------
    PARA PUBLICAR ALGO NUEVO:
-   1. CopiÃ¡ un bloque { ... } completo de la lista de abajo.
+   1. Copiá un bloque { ... } completo de la lista de abajo.
    2. Pegalo arriba de todos (justo debajo de "const POSTS = [").
-   3. CambiÃ¡ id (invÃ©ntate uno que no se repita), date (ponÃ© la
+   3. Cambiá id (invéntate uno que no se repita), date (poné la
       fecha de hoy), title, description y downloadUrl.
-   4. GuardÃ¡. El mÃ¡s nuevo siempre queda arriba solo, porque se
-      ordena automÃ¡ticamente por "date".
+   4. Guardá. El más nuevo siempre queda arriba solo, porque se
+      ordena automáticamente por "date".
 
    PARA MARCAR UNA HERRAMIENTA COMO ACTUALIZADA:
-   1. BuscÃ¡ su bloque existente.
-   2. CambiÃ¡ su "date" a la fecha de hoy.
+   1. Buscá su bloque existente.
+   2. Cambiá su "date" a la fecha de hoy.
    3. Agregale  updated: true
-   4. EditÃ¡ la descripciÃ³n si querÃ©s contar quÃ© cambiÃ³.
+   4. Editá la descripción si querés contar qué cambió.
    Con eso sube arriba y le aparece la etiqueta "actualizado".
    ============================================================ */
 const POSTS = [
@@ -235,8 +235,8 @@ const POSTS = [
     version: "v1.2.0",
     date: "2026-07-28",
     updated: false,
-    title: "Panel de control mÃ¡s rÃ¡pido",
-    description: "ReescribÃ­ el motor de renderizado y ahora carga casi al instante. TambiÃ©n arreglÃ© un par de bugs que reportaron esta semana.",
+    title: "Panel de control más rápido",
+    description: "Reescribí el motor de renderizado y ahora carga casi al instante. También arreglé un par de bugs que reportaron esta semana.",
     downloadUrl: "#",
     downloadLabel: "Descargar v1.2.0"
   },
@@ -246,7 +246,7 @@ const POSTS = [
     date: "2026-07-10",
     updated: false,
     title: "Soporte para modo oscuro",
-    description: "Ahora podÃ©s cambiar entre modo claro y oscuro desde la configuraciÃ³n. Se guarda tu preferencia automÃ¡ticamente.",
+    description: "Ahora podés cambiar entre modo claro y oscuro desde la configuración. Se guarda tu preferencia automáticamente.",
     downloadUrl: "#",
     downloadLabel: "Descargar v1.1.0"
   },
@@ -255,8 +255,8 @@ const POSTS = [
     version: "v1.0.0",
     date: "2026-06-15",
     updated: false,
-    title: "Primera versiÃ³n pÃºblica",
-    description: "AcÃ¡ arranca todo. Esta es la primera versiÃ³n estable de mi software, con las funciones bÃ¡sicas listas para usar.",
+    title: "Primera versión pública",
+    description: "Acá arranca todo. Esta es la primera versión estable de mi software, con las funciones básicas listas para usar.",
     downloadUrl: "#",
     downloadLabel: "Descargar v1.0.0"
   }
@@ -267,7 +267,7 @@ function renderFeed(){
   feed.innerHTML = "";
 
   if (POSTS.length === 0){
-    feed.innerHTML = '<div class="empty">TodavÃ­a no hay publicaciones.</div>';
+    feed.innerHTML = '<div class="empty">Todavía no hay publicaciones.</div>';
     return;
   }
 
@@ -280,7 +280,7 @@ function renderFeed(){
 
     let badge = "";
     if (i === 0){
-      badge = '<span class="latest-badge"><span class="ping"></span>Ãºltimo</span>';
+      badge = '<span class="latest-badge"><span class="ping"></span>último</span>';
     } else if (post.updated){
       badge = '<span class="latest-badge" style="background:var(--blue);color:#fff;">actualizado</span>';
     }
@@ -294,8 +294,8 @@ function renderFeed(){
       <div class="post-title">${escapeHtml(post.title)}</div>
       <div class="post-desc">${escapeHtml(post.description)}</div>
       <div class="post-footer">
-        <span class="expand-hint">tocÃ¡ para leer mÃ¡s</span>
-        <a class="download-btn" href="${post.downloadUrl}" download>${escapeHtml(post.downloadLabel)} â†“</a>
+        <span class="expand-hint">tocá para leer más</span>
+        <a class="download-btn" href="${post.downloadUrl}" download>${escapeHtml(post.downloadLabel)} ↓</a>
       </div>
     `;
 
