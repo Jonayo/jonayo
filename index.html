@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jonayo �?" SmartCache</title>
+<title>Jonayo · SmartCache</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -332,7 +332,7 @@
   <div id="feed"></div>
 </main>
 
-<footer>jonayo �?" actualizado a mano, sin servidores</footer>
+<footer>jonayo · actualizado a mano, sin servidores</footer>
 
 <div id="lightbox" aria-hidden="true">
   <span class="close" aria-label="Cerrar">&times;</span>
@@ -341,7 +341,7 @@
 
 <script>
 /* ============================================================
-   C�"MO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
+   COMO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
    ------------------------------------------------------------
    Las publicaciones viven en la lista POSTS de abajo (cada una
    es un objeto { ... }). El sitio las muestra solas, ordenadas
@@ -506,7 +506,7 @@ function renderFeed(){
           blocks +
           license +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel)</a>' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + '</a>' +
           '</div>' +
         '</div>'
       : '<div class="post-body">' +
@@ -517,7 +517,7 @@ function renderFeed(){
           '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
           (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel)</a>' +
+            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + '</a>' +
           '</div>' +
         '</div>';
 
