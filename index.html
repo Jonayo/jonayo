@@ -499,6 +499,14 @@
   .lic-prices{ list-style:none; font-size:14px; color:#3a3a37; }
   .lic-prices li{ padding:2px 0; }
   .lic-prices b{ font-family:'Space Mono', monospace; color:var(--accent); }
+  .lic-plan{ border-collapse:collapse; width:100%; font-size:13px; min-width:230px; }
+  .lic-plan th, .lic-plan td{ padding:6px 10px; border-bottom:1px dashed var(--line); }
+  .lic-plan th{ font-family:'Space Mono', monospace; font-weight:700; color:var(--ink); text-align:left; }
+  .lic-plan td{ color:#3a3a37; }
+  .lic-plan td b{ color:var(--accent); font-family:'Space Mono', monospace; }
+  .lic-plan .usd{ text-align:right; }
+  .lic-plan tbody tr:last-child th, .lic-plan tbody tr:last-child td{ border-bottom:none; }
+  .lic-plan thead th{ border-bottom:2px solid var(--accent); }
 </style>
 </head>
 <body>
@@ -596,14 +604,16 @@
         <img class="lic-logo" src="logo-borneo.png" alt="Borneo Schematics">
         <div class="lic-info">
           <div class="lic-name">BORNEO SCHEMATICS</div>
-          <ul class="lic-prices">
-            <li>3 Meses 1 Usuario: <b>19 USDT</b></li>
-            <li>3 Meses 2 Usuarios: <b>30 USDT</b></li>
-            <li>6 Meses 1 Usuario: <b>30.5 USDT</b></li>
-            <li>6 Meses 2 Usuarios: <b>45.5 USDT</b></li>
-            <li>12 Meses 1 Usuario: <b>46 USDT</b></li>
-            <li>12 Meses 2 Usuarios: <b>61 USDT</b></li>
-          </ul>
+          <table class="lic-plan">
+            <thead>
+              <tr><th></th><th class="usd">1 Usuario</th><th class="usd">2 Usuarios</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>3 Meses</th><td class="usd"><b>19 USDT</b></td><td class="usd"><b>30 USDT</b></td></tr>
+              <tr><th>6 Meses</th><td class="usd"><b>30.5 USDT</b></td><td class="usd"><b>45.5 USDT</b></td></tr>
+              <tr><th>12 Meses</th><td class="usd"><b>46 USDT</b></td><td class="usd"><b>61 USDT</b></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
