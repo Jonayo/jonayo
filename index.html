@@ -605,7 +605,7 @@ document.addEventListener('keydown', (e) => {
 (function(){
   var v = document.getElementById('visits');
   if (!v) return;
-  var url = 'https://api.countapi.xyz/hit/jonayo.vercel.app/visits';
+  var url = 'https://countapi.mileshilliard.com/api/v1/hit/Jonayo_jonayo_visits';
   fetch(url)
     .then(function(r){ return r.json(); })
     .then(function(d){ v.textContent = 'Visitas: ' + d.value; })
