@@ -357,6 +357,30 @@
   }
   #visits.ready{ opacity:1; }
 
+  .social-row{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:16px;
+  }
+  .soc-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:44px; height:44px;
+    border-radius:50%;
+    color:#fff;
+    text-decoration:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.22);
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .soc-btn svg{ width:20px; height:20px; fill:#fff; }
+  .soc-btn:hover{ transform:translateY(-2px); filter:brightness(1.12); }
+  .s-yt{ background:#FF0000; }
+  .s-tt{ background:#000000; }
+  .s-tg{ background:#229ED9; }
+  .s-mail{ background:#D93025; }
+
   .tabs{
     display:flex;
     justify-content:center;
@@ -623,7 +647,22 @@
   </div>
 </main>
 
-<footer>© jonayo — 2026<br><span id="visits">Visitas: …</span></footer>
+<footer>© jonayo — 2026
+<div class="social-row">
+  <a class="soc-btn s-yt" href="https://www.youtube.com/@JonayoOficial/shorts" target="_blank" rel="noopener" aria-label="YouTube Shorts" title="YouTube Shorts">
+    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+  </a>
+  <a class="soc-btn s-tt" href="https://www.tiktok.com/@jonayo41" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+    <svg viewBox="0 0 24 24"><path d="M12.59.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+  </a>
+  <a class="soc-btn s-tg" href="https://t.me/Jonayogoth" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
+    <svg viewBox="0 0 24 24"><path d="M9.04 15.71l-.47 4.44c.66 0 .95-.29 1.29-.63l3.06-2.94 6.32 4.66c1.16.64 2 .3 2.31-1.08L23.96 4.5c.43-1.92-.62-2.66-1.9-2.16L1.9 9.94c-1.37.52-1.3 1.61-.2 2 .55.2.94.67 1 .67l1.7.53 8.55-6.03c.43-.33.84-.02.51.19l-4.4 4.1z"/></svg>
+  </a>
+  <a class="soc-btn s-mail" href="mailto:jonayooficial@gmail.com" aria-label="Correo" title="Escribir por correo">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM4 6h16l-8 5.5L4 6zm0 12V8.9l8 5.4 8-5.4V18z"/></svg>
+  </a>
+</div>
+<br><span id="visits">Visitas: …</span></footer>
 
 <div id="lightbox" aria-hidden="true">
   <span class="close" aria-label="Cerrar">&times;</span>
