@@ -141,6 +141,14 @@
     letter-spacing:-0.01em;
     text-align:center;
   }
+  .badge-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:8px;
+    flex-wrap:wrap;
+  }
+  .badge-row .title-badge{ margin-left:0; }
   .post-desc p{
     margin-top:12px;
     color:#3a3a37;
@@ -247,6 +255,22 @@
   @keyframes glowPulse{
     0%,100%{ box-shadow:0 0 8px rgba(255,90,31,.6); filter:brightness(1); }
     50%{ box-shadow:0 0 18px 3px rgba(255,140,30,.95), 0 0 34px rgba(255,200,60,.65); filter:brightness(1.25); }
+  }
+
+  .badge-nuevo{
+    background:linear-gradient(90deg,#7CFF00,#00E5FF,#7CFF00) !important;
+    background-size:200% 100% !important;
+    box-shadow:0 0 12px rgba(0,229,255,.5);
+    animation:bgShift 2.2s linear infinite, glowCyan 1.5s ease-in-out infinite !important;
+  }
+  @keyframes glowCyan{
+    0%,100%{ box-shadow:0 0 8px rgba(0,229,255,.5); filter:brightness(1); }
+    50%{ box-shadow:0 0 18px 3px rgba(0,229,255,.95), 0 0 34px rgba(124,255,0,.6); filter:brightness(1.25); }
+  }
+  .badge-gratis{
+    background:linear-gradient(90deg,#FF5A1F,#FFB03A,#FF5A1F) !important;
+    background-size:200% 100% !important;
+    animation:bgShift 2.2s linear infinite, glowPulse 1.4s ease-in-out infinite !important;
   }
 
   .license{ margin-top:8px; }
@@ -714,6 +738,7 @@ const POSTS = [
     updated: false,
     title: "Fast Booster Gaming",
     image: "fastbooster-logo.png", imageLarge: "fastbooster-logo-large.png",
+    badges: ["Nuevo", "GRATIS"],
     introLabel: "¿Qué es FAST BOOSTER GAMING?",
     intro: "Optimiza tu PC para jugar con un solo clic: cierra programas que sobran, pausa servicios de Windows que no usás y libera RAM en standby. Pensado para sacar más FPS sin tocar nada a mano.",
     features: [
@@ -846,6 +871,16 @@ function renderFeed(){
       ? '<span class="title-badge">' + escapeHtml(post.titleBadge) + '</span>'
       : '';
 
+    const miniBadges = (post.badges || [])
+      .map(b => {
+        const key = String(b).toLowerCase();
+        let cls = "title-badge";
+        if (key.indexOf("nuevo") >= 0) cls += " badge-nuevo";
+        else if (key.indexOf("gratis") >= 0 || key.indexOf("free") >= 0) cls += " badge-gratis";
+        return '<span class="' + cls + '">' + escapeHtml(b) + '</span>';
+      })
+      .join('');
+
     const license = post.license
       ? '<div class="license"><span class="blk-title">' + escapeHtml(post.license.heading) + '</span>' +
         (post.license.text ? '<p>' + escapeHtml(post.license.text) + '</p>' : '') +
@@ -860,6 +895,7 @@ function renderFeed(){
             '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
           '</div>' +
           '<div class="post-title">' + escapeHtml(post.title) + titleBadge + '</div>' +
+          '<div class="badge-row">' + miniBadges + '</div>' +
           intro +
           (features ? '<div class="features">' + features + '</div>' : '') +
           blocks +
@@ -873,6 +909,7 @@ function renderFeed(){
             '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
           '</div>' +
           '<div class="post-title">' + escapeHtml(post.title) + '</div>' +
+          '<div class="badge-row">' + miniBadges + '</div>' +
           '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
           (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
           '<div class="post-footer">' +
