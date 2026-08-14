@@ -1,0 +1,356 @@
+Necesito que publiques un sitio web estático llamado "Jonayo" usando mi cuenta de GitHub, con hosting gratuito en GitHub Pages. Hacé todo el proceso de punta a punta y al final pasame la URL pública funcionando.
+
+## Qué es el sitio
+Una página simple, estilo feed/blog, donde presento software propio. Cada publicación es un "post" con versión, fecha, título, descripción y un botón de descarga. Las publicaciones más nuevas (o las que edité más recientemente) siempre quedan arriba de todo.
+
+## Pasos a seguir
+
+1. Creá un repositorio público nuevo llamado `jonayo` en mi cuenta de GitHub.
+2. Agregá un archivo llamado exactamente `index.html` en la raíz del repositorio, con el contenido exacto que te paso más abajo (no lo reescribas ni lo "mejores": ya está diseñado y probado, usalo tal cual).
+3. Activá GitHub Pages para ese repositorio: fuente = rama `main`, carpeta = `/ (root)`.
+4. Verificá que la URL pública (tipo `https://[usuario].github.io/jonayo/`) cargue correctamente y muestre los 3 posts de ejemplo.
+5. Agregá también un `README.md` corto (en español) que explique cómo publicar un post nuevo o marcar uno como actualizado, basándote en las instrucciones que ya están comentadas dentro del `<script>` del propio `index.html`.
+6. Al terminar, decime la URL final del sitio.
+
+## Diseño y estilo (ya implementado en el HTML, no lo cambies salvo que te lo pida)
+- Fondo claro tipo papel (#F0EEE6), texto casi negro, un solo color de acento naranja (#FF5A1F) y un azul (#2451FF) para links.
+- Tipografía: 'Space Mono' para títulos/metadatos técnicos (versión, fecha), 'Inter' para el cuerpo de texto.
+- Cada post es una tarjeta que se puede tocar para expandirse y leer la descripción completa.
+- El post más reciente tiene una etiqueta "último" con un punto animado. Los posts editados (no nuevos) muestran una etiqueta azul "actualizado".
+- Responsive, pensado primero para celular.
+- Sin frameworks ni dependencias externas más que las fuentes de Google Fonts vía CDN.
+
+## Cómo se publican posts nuevos (ya documentado dentro del archivo)
+No hay backend ni base de datos: los posts viven en un array `POSTS` dentro del propio `index.html`. Para publicar algo nuevo, se edita ese archivo directamente desde el navegador de GitHub (ícono de lápiz) y se hace commit. El sitio se actualiza solo en menos de un minuto. El orden es automático por fecha, así que nunca hay que reordenar nada a mano.
+
+## Contenido exacto de index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jonayo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F0EEE6;
+    --ink:#1A1B1E;
+    --muted:#6B6B63;
+    --line:#D8D4C8;
+    --accent:#FF5A1F;
+    --accent-ink:#FFF3EC;
+    --blue:#2451FF;
+    --card:#FAF9F5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue); text-decoration:none;}
+
+  header{
+    padding: clamp(28px,6vw,56px) clamp(20px,6vw,64px) 24px;
+    border-bottom:1px solid var(--line);
+  }
+  .wordmark{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:clamp(28px,5vw,40px);
+    letter-spacing:-0.02em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .wordmark .dot{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+    flex-shrink:0;
+  }
+  .tagline{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:15px;
+    font-family:'Space Mono', monospace;
+  }
+  .tagline .cursor{
+    display:inline-block;
+    width:8px; height:14px;
+    background:var(--ink);
+    margin-left:2px;
+    vertical-align:-2px;
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+
+  main{
+    max-width:720px;
+    margin:0 auto;
+    padding: clamp(24px,5vw,48px) clamp(20px,6vw,24px) 80px;
+  }
+  #feed{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .post{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 22px;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(10px);
+    animation:rise 0.5s ease forwards;
+    transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .post:hover{
+    border-color:#c7c2b2;
+    box-shadow:0 4px 14px rgba(26,27,30,0.06);
+    transform:translateY(-2px);
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0);} }
+
+  .post-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    flex-wrap:wrap;
+  }
+  .version-tag{
+    background:var(--ink);
+    color:var(--paper);
+    padding:2px 8px;
+    border-radius:4px;
+    font-weight:700;
+  }
+  .latest-badge{
+    background:var(--accent);
+    color:var(--accent-ink);
+    padding:2px 8px;
+    border-radius:4px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .latest-badge .ping{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--accent-ink);
+    animation:blink 1s steps(1) infinite;
+  }
+
+  .post-title{
+    font-size:19px;
+    font-weight:700;
+    margin-top:10px;
+    letter-spacing:-0.01em;
+  }
+  .post-desc{
+    margin-top:6px;
+    color:#3a3a37;
+    font-size:14.5px;
+    max-height:2.9em;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  .post.open .post-desc{ max-height:400px; }
+
+  .post-footer{
+    margin-top:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .expand-hint{
+    font-family:'Space Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .download-btn{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:13px;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:9px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transition:background .15s ease;
+    flex-shrink:0;
+  }
+  .download-btn:hover{ background:var(--accent); color:var(--accent-ink); }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 50px;
+    color:var(--muted);
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+  }
+
+  .empty{
+    font-family:'Space Mono', monospace;
+    color:var(--muted);
+    padding:40px 0;
+    text-align:center;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .post{ animation:none; opacity:1; transform:none; }
+    .cursor, .ping{ animation:none; }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark"><span class="dot"></span>jonayo</div>
+  <div class="tagline">software hecho a mano<span class="cursor"></span></div>
+</header>
+
+<main>
+  <div id="feed"></div>
+</main>
+
+<footer>jonayo — actualizado a mano, sin servidores</footer>
+
+<script>
+/* ============================================================
+   CÓMO PUBLICAR ALGO NUEVO O ACTUALIZAR UNO EXISTENTE
+   ------------------------------------------------------------
+   PARA PUBLICAR ALGO NUEVO:
+   1. Copiá un bloque { ... } completo de la lista de abajo.
+   2. Pegalo arriba de todos (justo debajo de "const POSTS = [").
+   3. Cambiá id (invéntate uno que no se repita), date (poné la
+      fecha de hoy), title, description y downloadUrl.
+   4. Guardá. El más nuevo siempre queda arriba solo, porque se
+      ordena automáticamente por "date".
+
+   PARA MARCAR UNA HERRAMIENTA COMO ACTUALIZADA:
+   1. Buscá su bloque existente.
+   2. Cambiá su "date" a la fecha de hoy.
+   3. Agregale  updated: true
+   4. Editá la descripción si querés contar qué cambió.
+   Con eso sube arriba y le aparece la etiqueta "actualizado".
+   ============================================================ */
+const POSTS = [
+  {
+    id: "3",
+    version: "v1.2.0",
+    date: "2026-07-28",
+    updated: false,
+    title: "Panel de control más rápido",
+    description: "Reescribí el motor de renderizado y ahora carga casi al instante. También arreglé un par de bugs que reportaron esta semana.",
+    downloadUrl: "#",
+    downloadLabel: "Descargar v1.2.0"
+  },
+  {
+    id: "2",
+    version: "v1.1.0",
+    date: "2026-07-10",
+    updated: false,
+    title: "Soporte para modo oscuro",
+    description: "Ahora podés cambiar entre modo claro y oscuro desde la configuración. Se guarda tu preferencia automáticamente.",
+    downloadUrl: "#",
+    downloadLabel: "Descargar v1.1.0"
+  },
+  {
+    id: "1",
+    version: "v1.0.0",
+    date: "2026-06-15",
+    updated: false,
+    title: "Primera versión pública",
+    description: "Acá arranca todo. Esta es la primera versión estable de mi software, con las funciones básicas listas para usar.",
+    downloadUrl: "#",
+    downloadLabel: "Descargar v1.0.0"
+  }
+];
+
+function renderFeed(){
+  const feed = document.getElementById('feed');
+  feed.innerHTML = "";
+
+  if (POSTS.length === 0){
+    feed.innerHTML = '<div class="empty">Todavía no hay publicaciones.</div>';
+    return;
+  }
+
+  const sorted = [...POSTS].sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  sorted.forEach((post, i) => {
+    const el = document.createElement('article');
+    el.className = 'post';
+    el.style.animationDelay = (i * 0.05) + 's';
+
+    let badge = "";
+    if (i === 0){
+      badge = '<span class="latest-badge"><span class="ping"></span>último</span>';
+    } else if (post.updated){
+      badge = '<span class="latest-badge" style="background:var(--blue);color:#fff;">actualizado</span>';
+    }
+
+    el.innerHTML = `
+      <div class="post-meta">
+        <span class="version-tag">${escapeHtml(post.version)}</span>
+        ${badge}
+        <span>${formatDate(post.date)}</span>
+      </div>
+      <div class="post-title">${escapeHtml(post.title)}</div>
+      <div class="post-desc">${escapeHtml(post.description)}</div>
+      <div class="post-footer">
+        <span class="expand-hint">tocá para leer más</span>
+        <a class="download-btn" href="${post.downloadUrl}" download>${escapeHtml(post.downloadLabel)} ↓</a>
+      </div>
+    `;
+
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('.download-btn')) return;
+      el.classList.toggle('open');
+    });
+
+    feed.appendChild(el);
+  });
+}
+
+function formatDate(dateStr){
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString('es-ES', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+renderFeed();
+</script>
+
+</body>
+</html>
+
+```

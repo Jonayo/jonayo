@@ -11,6 +11,10 @@ No hay base de datos: los posts viven en un array `POSTS` dentro de `index.html`
 3. Cambiá `id` (inventate uno que no se repita), `date` (fecha de hoy), `title`, `description` y `downloadUrl`.
 4. Hacé commit y esperá menos de un minuto: el sitio se actualiza solo.
 
+> **Opcional:** para mostrar botoncitos brillosos bajo el título usá
+> `badges: ["Nuevo", "GRATIS"]` (se colorean solos: los que contienen
+> "nuevo" en verde/cian y los de "gratis"/"free" en naranja).
+
 El orden es automático por fecha, así que nunca hace falta reordenar a mano: el más nuevo siempre queda arriba.
 
 ## Cómo marcar una herramienta como actualizada

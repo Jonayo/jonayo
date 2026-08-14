@@ -90,7 +90,7 @@
     border-bottom:2px solid var(--line);
   }
   .post-logo{
-    max-width:280px;
+    max-width:360px;
     width:100%;
     height:auto;
     display:block;
@@ -141,6 +141,14 @@
     letter-spacing:-0.01em;
     text-align:center;
   }
+  .badge-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:8px;
+    flex-wrap:wrap;
+  }
+  .badge-row .title-badge{ margin-left:0; }
   .post-desc p{
     margin-top:12px;
     color:#3a3a37;
@@ -249,6 +257,22 @@
     50%{ box-shadow:0 0 18px 3px rgba(255,140,30,.95), 0 0 34px rgba(255,200,60,.65); filter:brightness(1.25); }
   }
 
+  .badge-nuevo{
+    background:linear-gradient(90deg,#7CFF00,#00E5FF,#7CFF00) !important;
+    background-size:200% 100% !important;
+    box-shadow:0 0 12px rgba(0,229,255,.5);
+    animation:bgShift 2.2s linear infinite, glowCyan 1.5s ease-in-out infinite !important;
+  }
+  @keyframes glowCyan{
+    0%,100%{ box-shadow:0 0 8px rgba(0,229,255,.5); filter:brightness(1); }
+    50%{ box-shadow:0 0 18px 3px rgba(0,229,255,.95), 0 0 34px rgba(124,255,0,.6); filter:brightness(1.25); }
+  }
+  .badge-gratis{
+    background:linear-gradient(90deg,#FF5A1F,#FFB03A,#FF5A1F) !important;
+    background-size:200% 100% !important;
+    animation:bgShift 2.2s linear infinite, glowPulse 1.4s ease-in-out infinite !important;
+  }
+
   .license{ margin-top:8px; }
   .license p{ margin-top:6px; }
   .cta-row{
@@ -345,6 +369,9 @@
   .c-mail{ background:#D93025; }
   .c-yt{ background:#FF0000; }
   .c-tt{ background:#000000; }
+  .c-ig{
+    background:radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  }
 
   #visits{
     display:inline-block;
@@ -382,6 +409,9 @@
   .s-tt{ background:#000000; }
   .s-tg{ background:#229ED9; }
   .s-mail{ background:#D93025; }
+  .s-ig{
+    background:radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  }
 
   .tabs{
     display:flex;
@@ -550,6 +580,9 @@
   <a class="contact-btn c-tg" href="https://t.me/Jonayogoth" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
     <svg viewBox="0 0 24 24"><path d="M9.04 15.71l-.47 4.44c.66 0 .95-.29 1.29-.63l3.06-2.94 6.32 4.66c1.16.64 2 .3 2.31-1.08L23.96 4.5c.43-1.92-.62-2.66-1.9-2.16L1.9 9.94c-1.37.52-1.3 1.61-.2 2 .55.2.94.67 1 .67l1.7.53 8.55-6.03c.43-.33.84-.02.51.19l-4.4 4.1z"/></svg>
   </a>
+  <a class="contact-btn c-ig" href="https://www.instagram.com/jonayo.oficial/" target="_blank" rel="noopener" aria-label="Instagram" title="Seguime en Instagram">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.259.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.645.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.7-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.646-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.357 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.781-2.618 6.98-6.98.059-1.28.073-1.688.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.98-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+  </a>
   <a class="contact-btn c-mail" href="mailto:jonayooficial@gmail.com?subject=Contacto%20v%C3%ADa%20web" aria-label="Correo" title="Escribir por correo">
     <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM4 6h16l-8 5.5L4 6zm0 12V8.9l8 5.4 8-5.4V18z"/></svg>
   </a>
@@ -666,6 +699,9 @@
   <a class="soc-btn s-tg" href="https://t.me/Jonayogoth" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
     <svg viewBox="0 0 24 24"><path d="M9.04 15.71l-.47 4.44c.66 0 .95-.29 1.29-.63l3.06-2.94 6.32 4.66c1.16.64 2 .3 2.31-1.08L23.96 4.5c.43-1.92-.62-2.66-1.9-2.16L1.9 9.94c-1.37.52-1.3 1.61-.2 2 .55.2.94.67 1 .67l1.7.53 8.55-6.03c.43-.33.84-.02.51.19l-4.4 4.1z"/></svg>
   </a>
+  <a class="soc-btn s-ig" href="https://www.instagram.com/jonayo.oficial/" target="_blank" rel="noopener" aria-label="Instagram" title="Seguime en Instagram">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.259.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.645.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.7-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.646-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.357 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.781-2.618 6.98-6.98.059-1.28.073-1.688.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.98-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+  </a>
   <a class="soc-btn s-mail" href="mailto:jonayooficial@gmail.com" aria-label="Correo" title="Escribir por correo">
     <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM4 6h16l-8 5.5L4 6zm0 12V8.9l8 5.4 8-5.4V18z"/></svg>
   </a>
@@ -707,6 +743,50 @@
      blocks   -> lista [{ heading, text }] de secciones extra
    ============================================================ */
 const POSTS = [
+  {
+    id: "jonayo-downloader",
+    version: "v1.3.0",
+    date: "2026-08-14",
+    updated: false,
+    title: "Jonayo Downloader",
+    image: "jonayodownloader-logo.png", imageLarge: "jonayodownloader-logo-large.png",
+    badges: ["Nuevo", "GRATIS"],
+    introLabel: "¿Qué es JONAYO DOWNLOADER?",
+    intro: "Descarga videos de YouTube en hasta 4K y extrae la música en MP3, todo gratis y sin anuncios. Rápido, con interfaz simple y actualizaciones automáticas.",
+    features: [
+      { title: "Videos en 4K", text: "Elegí la calidad: hasta 2160p según lo que ofrezca el video, en MP4, MKV, WEBM o AVI." },
+      { title: "Música en un clic", text: "Estraé el audio como MP3, M4A, FLAC y más, con la calidad de bitrate que quieras." },
+      { title: "Actualización automática", text: "La app te avisa cuando hay una versión nueva y la descargás directo." }
+    ],
+    blocks: [
+      { heading: "Playlists y más", text: "Analizá el video, mirá la calidad disponible y descargá solo el video o toda la playlist." },
+      { heading: "Gratis, en Windows", text: "Instalador recomendado o versión portátil: elegí la que prefieras, sin costo ni anuncios." }
+    ],
+    downloadUrl: "https://github.com/Jonayo/jonayodownloader/releases/latest/download/JonayoDownloader-Setup-1.3.0.exe",
+    downloadLabel: "Descargar gratis"
+  },
+  {
+    id: "fast-booster",
+    version: "v1.0.0",
+    date: "2026-08-10",
+    updated: false,
+    title: "Fast Booster Gaming",
+    image: "fastbooster-logo.png", imageLarge: "fastbooster-logo-large.png",
+    badges: ["Nuevo", "GRATIS"],
+    introLabel: "¿Qué es FAST BOOSTER GAMING?",
+    intro: "Optimiza tu PC para jugar con un solo clic: cierra programas que sobran, pausa servicios de Windows que no usás y libera RAM en standby. Pensado para sacar más FPS sin tocar nada a mano.",
+    features: [
+      { title: "Un solo clic", text: "Activás el boost y la app se encarga de limpiar procesos, servicios y RAM por vos." },
+      { title: "Más FPS y menos lag", text: "Menos procesos en segundo plano, más recursos para el juego en primer plano." },
+      { title: "Sigue en la bandeja", text: "La aceleración continúa en segundo plano mientras jugás, sin estorbar." }
+    ],
+    blocks: [
+      { heading: "Modo gamer / máx. rendimiento", text: "Opción para aplicar el perfil de máximo rendimiento de Windows y que el sistema priorice el juego." },
+      { heading: "¿Es seguro?", text: "Los procesos del sistema y del juego en primer plano se respetan siempre. Puedés detener la aceleración y restaurar todo en un clic." }
+    ],
+    downloadUrl: "https://github.com/Jonayo/FastBoosterGaming/releases/latest/download/FastBoosterGaming.exe",
+    downloadLabel: "Descargar gratis"
+  },
   {
     id: "smartcache",
     version: "v1.2",
@@ -825,6 +905,16 @@ function renderFeed(){
       ? '<span class="title-badge">' + escapeHtml(post.titleBadge) + '</span>'
       : '';
 
+    const miniBadges = (post.badges || [])
+      .map(b => {
+        const key = String(b).toLowerCase();
+        let cls = "title-badge";
+        if (key.indexOf("nuevo") >= 0) cls += " badge-nuevo";
+        else if (key.indexOf("gratis") >= 0 || key.indexOf("free") >= 0) cls += " badge-gratis";
+        return '<span class="' + cls + '">' + escapeHtml(b) + '</span>';
+      })
+      .join('');
+
     const license = post.license
       ? '<div class="license"><span class="blk-title">' + escapeHtml(post.license.heading) + '</span>' +
         (post.license.text ? '<p>' + escapeHtml(post.license.text) + '</p>' : '') +
@@ -839,6 +929,7 @@ function renderFeed(){
             '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
           '</div>' +
           '<div class="post-title">' + escapeHtml(post.title) + titleBadge + '</div>' +
+          '<div class="badge-row">' + miniBadges + '</div>' +
           intro +
           (features ? '<div class="features">' + features + '</div>' : '') +
           blocks +
@@ -852,6 +943,7 @@ function renderFeed(){
             '<span class="version-tag">' + escapeHtml(post.version) + '</span>' + badge + '<span>' + formatDate(post.date) + '</span>' +
           '</div>' +
           '<div class="post-title">' + escapeHtml(post.title) + '</div>' +
+          '<div class="badge-row">' + miniBadges + '</div>' +
           '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
           (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
           '<div class="post-footer">' +
