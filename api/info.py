@@ -3,13 +3,14 @@ import json
 from urllib.parse import urlparse, parse_qs
 
 class handler(BaseHTTPRequestHandler):
-    def _try(self, url, clients):
+    def _try(self, url, extra_args):
         import yt_dlp
         opts = {
             'quiet': True, 'no_warnings': True, 'noplaylist': True,
             'skip_download': True, 'nocheckcertificate': True, 'socket_timeout': 12,
-            'extractor_args': {'youtube': {'player_client': clients}},
         }
+        if extra_args:
+            opts['extractor_args'] = extra_args
         with yt_dlp.YoutubeDL(opts) as ydl:
             return ydl.extract_info(url, download=False)
 
@@ -26,23 +27,25 @@ class handler(BaseHTTPRequestHandler):
                 return
             info=None
             last_err=None
-            # Probar clientes en orden: android (estable para largos), tv, ios, web sin especificar
-            for clients in [['android'], ['tv'], ['ios'], ['web']]:
+            # Probar varios clientes, empezando por los que mejor evaden el bot-check
+            attempts = [
+                {'youtube': {'player_client': ['android']}},
+                {'youtube': {'player_client': ['android', 'web']}},
+                {'youtube': {'player_client': ['mweb']}},
+                {'youtube': {'player_client': ['ios']}},
+                None,  # sin especificar cliente (default)
+            ]
+            for extra in attempts:
                 try:
-                    info=self._try(url, clients)
+                    info=self._try(url, extra)
                     if info and (info.get('formats') or info.get('url')):
                         break
                 except Exception as e:
                     last_err=e
+                    # si es bot-check, probar siguiente cliente
+                    if 'not a bot' in str(e).lower() or 'sign in' in str(e).lower():
+                        continue
                     continue
-            # ultimo intento sin cliente especificado
-            if not info or not (info.get('formats') or info.get('url')):
-                try:
-                    import yt_dlp
-                    with yt_dlp.YoutubeDL({'quiet':True,'no_warnings':True,'noplaylist':True,'skip_download':True,'nocheckcertificate':True,'socket_timeout':12}) as ydl:
-                        info=ydl.extract_info(url, download=False)
-                except Exception as e:
-                    last_err=e
             if not info:
                 raise last_err or Exception('No se pudo obtener info del video')
             title=info.get('title','')
@@ -64,7 +67,6 @@ class handler(BaseHTTPRequestHandler):
                 try: h=int(h)
                 except: h=720
                 fmts.append({'quality':f'{h}p','height':h,'ext':info.get('ext') or 'mp4','vcodec':str(info.get('vcodec') or ''),'acodec':str(info.get('acodec') or ''),'url':info.get('url')})
-            # si aun vacio pero hay formatos, intentar tomar cualquier url con altura aunque vcodec none (fallback para vivos largos)
             if not fmts:
                 for f in (info.get('formats') or []):
                     h=f.get('height')
@@ -88,16 +90,19 @@ class handler(BaseHTTPRequestHandler):
                         best=f
             if best:
                 fmts.append({'quality':'Audio · MP3','height':0,'ext':'m4a','vcodec':'none','acodec':best.get('acodec'),'url':best.get('url')})
-            # si sigue vacio, error explicito
             if not fmts:
-                raise Exception(f'YouTube no devolvió calidades para este video (duración {info.get("duration") or "?"}s). Probá con otro video o usa el link directo.')
+                # detectar bot-check para dar mensaje útil
+                raise Exception('YouTube bloqueó la descarga desde el servidor web (verificación anti-bots). Probá con otro video o usa la APK Android — desde el celular funciona sin ese bloqueo.')
             video_fmts=[f for f in fmts if f['height']>0][:6]
             audio_fmts=[f for f in fmts if f['height']==0]
             fmts=video_fmts+audio_fmts
             self.wfile.write(json.dumps({'title':title,'formats':fmts}).encode())
         except Exception as e:
-            import traceback
-            self.wfile.write(json.dumps({'error': str(e)[:500]}).encode())
+            msg=str(e)
+            # Mensaje amigable para bot-check
+            if 'not a bot' in msg.lower() or 'sign in' in msg.lower():
+                msg='YouTube bloqueó temporalmente las descargas desde la web (anti-bots). Probá con otro video o usa la app Android — ahí funciona sin este límite.'
+            self.wfile.write(json.dumps({'error': msg[:400]}).encode())
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
