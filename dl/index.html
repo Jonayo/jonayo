@@ -128,7 +128,7 @@ async function abrirModal(it){
     // preview sin anuncios con el primer formato de video
     const firstVideo=(j.formats||[]).find(f=>f.vcodec!=='none' && f.url);
     if(firstVideo){
-      const v=$('m-video'); v.src=firstVideo.url; $('m-player-wrap').style.display='block';
+      const v=$('m-video'); v.src=firstVideo.url; v.crossOrigin='anonymous'; $('m-player-wrap').style.display='block'; v.onerror=()=>{ v.poster=''; document.getElementById('m-player-wrap').innerHTML='<p style="font-size:12px;color:var(--muted)">La previsualización directa está bloqueada por YouTube. Usa el botón Descargar para ver el video sin anuncios.</p>'; };
     }
     (j.formats||[]).forEach(f=>{
       const b=document.createElement('button');
