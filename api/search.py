@@ -2,11 +2,13 @@ from http.server import BaseHTTPRequestHandler
 import json
 from urllib.parse import urlparse, parse_qs
 
+
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Cache-Control', 's-maxage=300, stale-while-revalidate=600')
         self.end_headers()
         try:
             qs = parse_qs(urlparse(self.path).query)
@@ -18,12 +20,13 @@ class handler(BaseHTTPRequestHandler):
             ydl_opts = {
                 'quiet': True, 'no_warnings': True, 'noplaylist': True,
                 'extract_flat': True, 'playlistend': 12,
-                'nocheckcertificate': True, 'socket_timeout': 12,
-                'extractor_args': {'youtube': {'player_client': ['tv', 'android']}},
+                'nocheckcertificate': True, 'geo_bypass': True,
+                'socket_timeout': 12, 'retries': 2, 'extractor_retries': 2,
+                'extractor_args': {'youtube': {'player_skip': ['configs']}},
             }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 data = ydl.extract_info('ytsearch12:' + q, download=False)
-            items=[]
+            items = []
             for e in (data.get('entries') or []):
                 if not e or not e.get('id'):
                     continue
@@ -31,13 +34,21 @@ class handler(BaseHTTPRequestHandler):
                 title = e.get('title') or 'Sin título'
                 channel = e.get('uploader') or e.get('channel') or ''
                 dur = e.get('duration') or 0
-                dur_txt = f"{int(dur//60)}:{int(dur%60):02d}" if dur else ''
+                try:
+                    dur_txt = f"{int(dur // 60)}:{int(dur % 60):02d}" if dur else ''
+                except (TypeError, ValueError):
+                    dur_txt = ''
                 thumb = f'https://i.ytimg.com/vi/{vid}/mqdefault.jpg'
                 url = f'https://www.youtube.com/watch?v={vid}'
-                items.append({'id': vid, 'title': title, 'channel': channel, 'duration': dur_txt, 'thumb': thumb, 'url': url})
+                items.append({'id': vid, 'title': title, 'channel': channel,
+                              'duration': dur_txt, 'thumb': thumb, 'url': url})
             self.wfile.write(json.dumps({'items': items}).encode())
         except Exception as e:
-            self.wfile.write(json.dumps({'error': str(e)[:400]}).encode())
+            msg = str(e)
+            if 'not a bot' in msg.lower() or 'sign in' in msg.lower():
+                msg = 'YouTube bloqueó la búsqueda temporalmente. Probá en unos minutos.'
+            self.wfile.write(json.dumps({'error': msg[:400]}).encode())
+
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
