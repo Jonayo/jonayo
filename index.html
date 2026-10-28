@@ -431,6 +431,8 @@
     padding:9px 22px;
     border-radius:20px;
     cursor:pointer;
+    display:inline-block;
+    text-decoration:none;
     transition:background .15s ease, color .15s ease, box-shadow .15s ease;
   }
   .tab:hover{ color:#fff; }
@@ -595,6 +597,7 @@
 <nav class="tabs">
   <button class="tab active" data-page="inicio">INICIO</button>
   <button class="tab" data-page="servicios">SERVICIOS</button>
+  <a class="tab" href="presentacion/">APP</a>
 </nav>
 
 <main>
@@ -1007,17 +1010,25 @@ renderFeed();
 
 /* Pestañas Inicio / Servicios */
 (function(){
-  var tabs = document.querySelectorAll('.tab');
+  var tabs = document.querySelectorAll('button.tab');
   var pages = document.querySelectorAll('.page');
+  function activate(name){
+    tabs.forEach(function(x){ x.classList.toggle('active', x.dataset.page === name); });
+    pages.forEach(function(p){ p.classList.toggle('active', p.id === 'page-' + name); });
+  }
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
-      tabs.forEach(function(x){ x.classList.remove('active'); });
-      t.classList.add('active');
-      pages.forEach(function(p){ p.classList.remove('active'); });
-      document.getElementById('page-' + t.dataset.page).classList.add('active');
+      activate(t.dataset.page);
       window.scrollTo(0, 0);
     });
   });
+  /* Permite enlazar pestañas: /#inicio y /#servicios */
+  function fromHash(){
+    var n = location.hash.slice(1);
+    if (n === 'inicio' || n === 'servicios') activate(n);
+  }
+  fromHash();
+  window.addEventListener('hashchange', fromHash);
 })();
 
 /* Lightbox: abrir imagen en grande al hacer clic */
