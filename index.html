@@ -769,7 +769,8 @@ const POSTS = [
       { heading: "Múltiples formatos", text: "MP4 para video, MP3 y M4A para música. El audio siempre en la mejor calidad disponible." }
     ],
     downloadUrl: "https://github.com/Jonayo/jonayodownloader-apk/releases/download/v3.0.23/JYDownloader-v3.0.23.apk",
-    downloadLabel: "Descargar APK v3.0.23"
+    downloadLabel: "Descargar APK v3.0.23",
+    downloadFallback: "https://github.com/Jonayo/jonayodownloader-apk/releases/latest"
   },
   {
     id: "jonayo-downloader",
@@ -951,6 +952,12 @@ function renderFeed(){
         '</div></div>'
       : '';
 
+    const dlBtn = '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + '</a>' +
+      (post.downloadFallback
+        ? '<div style="margin-top:10px;text-align:center;font-size:12px;opacity:.75">Si el enlace da error, ' +
+          '<a href="' + escapeHtml(post.downloadFallback) + '" style="text-decoration:underline">abrí la página de descargas</a>.</div>'
+        : '');
+
     const body = post.intro || post.features || post.blocks
       ? '<div class="post-body">' +
           '<div class="post-meta">' +
@@ -963,7 +970,7 @@ function renderFeed(){
           blocks +
           license +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + '</a>' +
+            dlBtn +
           '</div>' +
         '</div>'
       : '<div class="post-body">' +
@@ -975,7 +982,7 @@ function renderFeed(){
           '<div class="post-desc" style="padding:0 24px;">' + (post.description || []).map(t => '<p>' + escapeHtml(t) + '</p>').join('') + '</div>' +
           (post.why ? '<div class="why-block" style="margin:0 24px;">' + escapeHtml(post.why) + '</div>' : '') +
           '<div class="post-footer">' +
-            '<a class="download-btn" href="' + escapeHtml(post.downloadUrl) + '">' + escapeHtml(post.downloadLabel) + '</a>' +
+            dlBtn +
           '</div>' +
         '</div>';
 
