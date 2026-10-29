@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<script>
+/* Sin barra final, las fotos relativas se piden en /img/ y dan 404. */
+if (!/\/$/.test(location.pathname) && location.pathname.lastIndexOf('.') <= location.pathname.lastIndexOf('/')) {
+  location.replace(location.pathname + '/' + location.search + location.hash);
+}
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>J Youtube Downloader · Jonayo</title>
