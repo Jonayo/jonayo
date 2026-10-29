@@ -60,9 +60,9 @@
   .gal .zoom{ position:absolute; right:10px; bottom:10px; width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:rgba(8,8,11,.72); color:#fff; backdrop-filter:blur(4px); }
   .gal figcaption{ font-family:'Space Mono',monospace; font-size:12px; line-height:1.35; color:var(--muted); text-align:center; margin-top:9px; }
   .gal figure:hover .shot{ border-color:var(--accent); }
-  html.js .reveal{ opacity:0; transform:translateY(16px); transition:opacity .45s ease, transform .45s ease; }
-  html.js .reveal.on{ opacity:1; transform:none; }
-  @media (prefers-reduced-motion:reduce){ html.js .reveal{opacity:1; transform:none; transition:none;} }
+  html.io .reveal{ opacity:0; transform:translateY(16px); transition:opacity .45s ease, transform .45s ease; }
+  html.io .reveal.on{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ html.io .reveal{opacity:1; transform:none; transition:none;} }
 
   .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-top:14px; }
   .grid figure{ margin:0; cursor:zoom-in; }
@@ -111,7 +111,7 @@
 
   <div class="head">
     <div class="chips">
-      <span class="chip dark">v3.0.23</span>
+      <span class="chip dark">v3.0.24</span>
       <span class="chip hot">último</span>
       <span class="chip">APK Android</span>
       <span class="chip">GRATIS</span>
@@ -250,7 +250,15 @@
         if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px' });
+    document.documentElement.classList.add('io');
     [].forEach.call(document.querySelectorAll('.reveal'), function (el) { io.observe(el); });
+    // Red de seguridad: lo que ya está en pantalla se muestra aunque el
+    // observador no llegue a dispararse (webviews viejos, vista previa).
+    setTimeout(function () {
+      [].forEach.call(document.querySelectorAll('.reveal:not(.on)'), function (el) {
+        if (el.getBoundingClientRect().top < innerHeight * 1.2) el.classList.add('on');
+      });
+    }, 1200);
   } else {
     [].forEach.call(document.querySelectorAll('.reveal'), function (el) { el.classList.add('on'); });
   }

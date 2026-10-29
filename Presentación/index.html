@@ -1,21 +1,275 @@
 <!DOCTYPE html>
+<!-- Copia de ../presentacion/index.html, solo para que el enlace viejo con tilde
+     (%C3%B3) siga mostrando las fotos. Si editás la pagina, volve a generar esta copia:
+     la version buena es la de /presentacion/.
+-->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Presentación · J Youtube Downloader</title>
+<base href="../presentacion/">
 <meta name="robots" content="noindex">
+<title>J Youtube Downloader · Jonayo</title>
+<meta name="description" content="Descargá música en MP3 y videos sin anuncios. Reproductor en segundo plano, ecualizador y modo offline. APK gratis para Android.">
+<meta name="theme-color" content="#08080B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="J Youtube Downloader · Jonayo">
+<meta property="og:description" content="Descargá música en MP3 y videos sin anuncios. Reproductor en segundo plano, ecualizador y modo offline.">
+<meta property="og:image" content="https://jonayo.github.io/jonayo/presentacion/img/hero.jpg">
+<meta property="og:url" content="https://jonayo.github.io/jonayo/presentacion/">
 <link rel="canonical" href="https://jonayo.github.io/jonayo/presentacion/">
-<script>location.replace('../presentacion/' + location.hash);</script>
-<noscript><meta http-equiv="refresh" content="0; url=../presentacion/"></noscript>
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  html,body{height:100%;margin:0;background:#08080B;color:#F0EEE6;
-    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center}
-  a{color:#FF5A1F}
-  p{font-size:15px;text-align:center;line-height:1.5;padding:0 24px}
+  :root{ --paper:#F0EEE6; --ink:#1A1B1E; --muted:#6B6B63; --line:#D8D4C8; --accent:#FF5A1F; --accent-ink:#FFF3EC; --card:#FAF9F5; --dark:#08080B; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased; padding-bottom:104px; }
+  a{text-decoration:none;}
+  img{display:block; max-width:100%; height:auto;}
+
+  .topbar{ background:var(--dark); border-bottom:1px solid rgba(255,255,255,.08); }
+  .topbar-in{ max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:10px 16px; flex-wrap:wrap; }
+  .brand{ font-family:'Space Mono',monospace; font-weight:700; font-size:15px; letter-spacing:.08em; color:#fff; }
+  .tabs{ display:flex; gap:6px; margin-left:auto; flex-wrap:wrap; }
+  .tab{ font-family:'Space Mono',monospace; font-weight:700; font-size:12.5px; color:#c9c9c3; padding:8px 16px; border-radius:20px; transition:background .15s ease, color .15s ease; }
+  .tab:hover{ color:#fff; }
+  .tab.active{ color:#fff; background:var(--accent); box-shadow:0 4px 14px rgba(255,90,31,.35); }
+
+  main{ max-width:1000px; margin:0 auto; padding:22px 16px 40px; }
+  .cover{ width:100%; border-radius:16px; border:1px solid var(--line); box-shadow:0 18px 44px rgba(0,0,0,.16); }
+
+  .head{ text-align:center; margin-top:22px; }
+  .chips{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; font-family:'Space Mono',monospace; font-size:11.5px; font-weight:700; }
+  .chip{ padding:3px 9px; border-radius:6px; border:1px solid var(--line); background:var(--card); color:var(--muted); }
+  .chip.dark{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .chip.hot{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  h1{ font-family:'Space Mono',monospace; font-size:clamp(22px,4vw,30px); margin-top:12px; letter-spacing:-.01em; }
+  .lead{ color:var(--muted); font-size:15px; max-width:62ch; margin:10px auto 0; }
+
+  .feat{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:10px; margin-top:24px; text-align:left; }
+  .feat div{ background:var(--card); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:10px; padding:11px 13px; }
+  .feat b{ display:block; font-family:'Space Mono',monospace; font-size:11.5px; margin-bottom:1px; }
+  .feat span{ color:var(--muted); font-size:12.5px; }
+
+  h2{ font-family:'Space Mono',monospace; font-size:16px; margin:32px 0 2px; }
+  .sub{ color:var(--muted); font-size:13px; }
+
+  /* Galeria vertical: una captura grande por fila, se scrollea y se abre en grande */
+  .gal{ display:grid; gap:22px; justify-items:center; margin-top:16px; }
+  .gal figure{ width:min(430px,100%); margin:0; cursor:zoom-in; }
+  .gal .shot{ position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:0 14px 34px rgba(0,0,0,.14); background:#fff; }
+  .gal img{ width:100%; display:block; }
+  .gal .n{ position:absolute; top:10px; left:10px; font-family:'Space Mono',monospace; font-weight:700; font-size:11px; background:rgba(8,8,11,.72); color:#fff; padding:3px 9px; border-radius:20px; backdrop-filter:blur(4px); }
+  .gal .zoom{ position:absolute; right:10px; bottom:10px; width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:rgba(8,8,11,.72); color:#fff; backdrop-filter:blur(4px); }
+  .gal figcaption{ font-family:'Space Mono',monospace; font-size:12px; line-height:1.35; color:var(--muted); text-align:center; margin-top:9px; }
+  .gal figure:hover .shot{ border-color:var(--accent); }
+  html.io .reveal{ opacity:0; transform:translateY(16px); transition:opacity .45s ease, transform .45s ease; }
+  html.io .reveal.on{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ html.io .reveal{opacity:1; transform:none; transition:none;} }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-top:14px; }
+  .grid figure{ margin:0; cursor:zoom-in; }
+  .grid img{ width:100%; border-radius:10px; border:1px solid var(--line); box-shadow:0 6px 18px rgba(0,0,0,.10); background:#fff; }
+  .grid figcaption{ font-family:'Space Mono',monospace; font-size:10.5px; line-height:1.3; color:var(--muted); text-align:center; margin-top:6px; }
+  .grid.sq{ grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); }
+
+  /* Visor a pantalla completa */
+  .lb{ position:fixed; inset:0; z-index:100; background:rgba(6,6,9,.96); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:14px; touch-action:pan-y; }
+  .lb[hidden]{ display:none; }
+  .lb img{ max-width:100%; max-height:calc(100vh - 132px); border-radius:12px; box-shadow:0 20px 50px rgba(0,0,0,.6); transition:opacity .18s ease; }
+  .lb .bar{ display:flex; align-items:center; gap:14px; color:#e8e8e2; font-family:'Space Mono',monospace; font-size:12px; }
+  .lb .cap{ color:#cfcfc8; font-family:'Inter',sans-serif; font-size:13.5px; text-align:center; max-width:min(560px,92vw); }
+  .lb button{ -webkit-tap-highlight-color:transparent; border:0; cursor:pointer; background:rgba(255,255,255,.10); color:#fff; width:46px; height:46px; border-radius:50%; display:grid; place-items:center; font-size:20px; }
+  .lb button:hover{ background:var(--accent); }
+  .lb .close{ position:absolute; top:14px; right:14px; }
+  .lb .prev{ position:absolute; left:10px; top:50%; transform:translateY(-50%); }
+  .lb .next{ position:absolute; right:10px; top:50%; transform:translateY(-50%); }
+  .lb .counter{ position:absolute; top:20px; left:20px; font-family:'Space Mono',monospace; font-size:12px; color:#bdbdb6; }
+  @media (max-width:520px){ .lb .prev{ left:4px; } .lb .next{ right:4px; } .lb .prev, .lb .next{ width:40px; height:40px; } }
+
+  .foot{ text-align:center; margin-top:32px; font-family:'Space Mono',monospace; font-size:11.5px; color:var(--muted); }
+  .foot a{ color:var(--ink); border-bottom:1px solid var(--line); }
+
+  .cta{ position:fixed; left:50%; bottom:calc(14px + env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:50; display:inline-flex; align-items:center; gap:9px; background:var(--accent); color:var(--accent-ink); font-family:'Space Mono',monospace; font-weight:700; font-size:13.5px; padding:13px 24px; border-radius:30px; white-space:nowrap; box-shadow:0 10px 26px rgba(255,90,31,.45),0 4px 12px rgba(0,0,0,.25); transition:transform .15s ease; }
+  .cta:hover{ transform:translateX(-50%) translateY(-2px); }
+  @media (max-width:420px){ .cta{ width:calc(100% - 28px); justify-content:center; font-size:13px; } }
 </style>
+<script>document.documentElement.className = "js";</script>
 </head>
 <body>
-  <p>La presentación ahora está en <a href="../presentacion/">jonayo.vercel.app/presentacion</a></p>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="../">JONAYO</a>
+    <nav class="tabs">
+      <a class="tab" href="../">INICIO</a>
+      <a class="tab" href="../#servicios">SERVICIOS</a>
+      <span class="tab active">APP</span>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <img class="cover" src="img/hero.jpg" width="1700" height="956" alt="J Youtube Downloader: búsqueda, descargas y reproductor">
+
+  <div class="head">
+    <div class="chips">
+      <span class="chip dark">v3.0.24</span>
+      <span class="chip hot">último</span>
+      <span class="chip">APK Android</span>
+      <span class="chip">GRATIS</span>
+    </div>
+    <h1>J Youtube Downloader</h1>
+    <p class="lead">Descargá videos de YouTube hasta 4K y extraé la música en MP3. Reproductor con cola, favoritos y ecualizador, música en segundo plano y modo offline, sin anuncios.</p>
+  </div>
+
+  <div class="feat">
+    <div><b>MÚSICA</b><span>MP3 con carátula y etiquetas</span></div>
+    <div><b>VIDEOS</b><span>Hasta 4K, sin anuncios</span></div>
+    <div><b>OFFLINE</b><span>Escuchá sin internet</span></div>
+    <div><b>2DO PLANO</b><span>Sigue sonando en otras apps</span></div>
+    <div><b>ECUALIZADOR</b><span>Presets: graves, rock, pop, agudos</span></div>
+    <div><b>COLA</b><span>Favoritos, historial y cola</span></div>
+  </div>
+
+  <h2>Así se ve</h2>
+  <p class="sub">Capturas reales de la app. Tocá una para verla en grande.</p>
+
+  <div class="gal" id="gal">
+    <figure class="reveal"><div class="shot"><img src="img/s01.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Pantalla de inicio con los videos en tendencia"><span class="n">01</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Explorá lo que es tendencia</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s02.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Menú para reproducir, encolar o descargar un video"><span class="n">02</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Elegí qué hacer con cada video</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s03.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Lista de descargas con botones de reproducir y descargar"><span class="n">03</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Descargá videos y música</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s04.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Pantalla de música descargada para escuchar sin internet"><span class="n">04</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Escuchá sin internet</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s05.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Reproductor a pantalla completa con carátula y controles"><span class="n">05</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Reproductor completo</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s06.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Menú de pulsado largo con favoritos, cola, descargar y ecualizador"><span class="n">06</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Mantené pulsado para más</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s07.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Tarjeta de reproducción en la barra de notificaciones"><span class="n">07</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Sigue en segundo plano</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s08.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Controles de música en la pantalla bloqueada"><span class="n">08</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Controlá desde la notificación</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s09.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Ajustes con el selector de tamaño de letra y la opción Muy grande marcada"><span class="n">09</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Agrandá la letra a tu gusto</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s10.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Pieza de la app: cero anuncios, cero suscripciones"><span class="n">10</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Sin anuncios ni suscripciones</figcaption></figure>
+    <figure class="reveal"><div class="shot"><img src="img/s11.jpg" width="640" height="1137" loading="lazy" decoding="async" alt="Pieza de cierre con los beneficios y el botón de descarga"><span class="n">11</span><span class="zoom" aria-hidden="true">⤢</span></div><figcaption>Gratis, sin registro</figcaption></figure>
+  </div>
+
+  <h2>Para compartir</h2>
+  <p class="sub">Piezas cuadradas para grupos y redes.</p>
+  <div class="grid sq" id="sqgrid">
+    <figure class="reveal"><img src="img/g1.jpg" width="720" height="720" loading="lazy" decoding="async" alt="Poster con todos los beneficios de la app"><figcaption>Todo en una app</figcaption></figure>
+    <figure class="reveal"><img src="img/g2.jpg" width="720" height="720" loading="lazy" decoding="async" alt="Poster de música gratis con el reproductor"><figcaption>Música gratis</figcaption></figure>
+    <figure class="reveal"><img src="img/g3.jpg" width="720" height="720" loading="lazy" decoding="async" alt="Poster de videos sin anuncios con la búsqueda"><figcaption>Videos sin anuncios</figcaption></figure>
+  </div>
+
+  <p class="foot">
+    <a href="https://github.com/Jonayo/jonayodownloader-apk/releases">Todas las versiones</a> ·
+    <a href="../">Volver al inicio</a><br>
+    Requiere Android 7.0 o superior · Actualizaciones automáticas desde la app
+  </p>
+</main>
+
+<a class="cta" href="https://github.com/Jonayo/jonayodownloader-apk/releases/latest">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+  Descarga gratis - Android
+</a>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Visor de capturas">
+  <span class="counter" id="lbcount">1 / 1</span>
+  <button class="close" id="lbclose" aria-label="Cerrar">✕</button>
+  <button class="prev" id="lbprev" aria-label="Anterior">‹</button>
+  <img id="lbimg" alt="">
+  <button class="next" id="lbnext" aria-label="Siguiente">›</button>
+  <p class="cap" id="lbcap"></p>
+</div>
+
+<script>
+(function () {
+  var figs = [].slice.call(document.querySelectorAll('#gal figure, #sqgrid figure'));
+  var items = figs.map(function (f, i) {
+    var img = f.querySelector('img');
+    var cap = f.querySelector('figcaption');
+    img.id = 'foto-' + (i + 1);
+    return { img: img, cap: cap ? cap.textContent : '' };
+  });
+  var lb = document.getElementById('lb');
+  var lbimg = document.getElementById('lbimg');
+  var lbcap = document.getElementById('lbcap');
+  var lbcount = document.getElementById('lbcount');
+  var idx = 0;
+
+  function show(i) {
+    idx = (i + items.length) % items.length;
+    var it = items[idx];
+    lbimg.src = it.img.src;
+    lbimg.alt = it.img.alt;
+    lbcap.textContent = it.cap;
+    lbcount.textContent = (idx + 1) + ' / ' + items.length;
+    var prev = items[(idx - 1 + items.length) % items.length], next = items[(idx + 1) % items.length];
+    [prev, next].forEach(function (n) { var im = new Image(); im.src = n.img.src; });
+  }
+  function open(i) {
+    show(i);
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    history.replaceState(null, '', '#foto-' + (idx + 1));
+  }
+  function close() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+
+  items.forEach(function (it, i) {
+    it.img.addEventListener('click', function () { open(i); });
+    var fig = it.img.closest('figure');
+    fig.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+    });
+    fig.setAttribute('tabindex', '0');
+  });
+  document.getElementById('lbprev').addEventListener('click', function () { show(idx - 1); });
+  document.getElementById('lbnext').addEventListener('click', function () { show(idx + 1); });
+  document.getElementById('lbclose').addEventListener('click', close);
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target === lbimg) { if (e.target === lb) close(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    if (e.key === 'ArrowRight') show(idx + 1);
+  });
+  var x0 = null;
+  lb.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 45) show(idx + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, { passive: true });
+
+  var m = /^#foto-(\d+)$/.exec(location.hash);
+  if (m) open(parseInt(m[1], 10) - 1);
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.documentElement.classList.add('io');
+    [].forEach.call(document.querySelectorAll('.reveal'), function (el) { io.observe(el); });
+    // Red de seguridad: lo que ya está en pantalla se muestra aunque el
+    // observador no llegue a dispararse (webviews viejos, vista previa).
+    setTimeout(function () {
+      [].forEach.call(document.querySelectorAll('.reveal:not(.on)'), function (el) {
+        if (el.getBoundingClientRect().top < innerHeight * 1.2) el.classList.add('on');
+      });
+    }, 1200);
+  } else {
+    [].forEach.call(document.querySelectorAll('.reveal'), function (el) { el.classList.add('on'); });
+  }
+})();
+</script>
+
 </body>
 </html>
